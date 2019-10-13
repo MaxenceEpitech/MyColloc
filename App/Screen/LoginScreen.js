@@ -54,25 +54,18 @@ class LoginScreen extends React.Component {
             >
                 <KeyboardAvoidingView
                     style={style.wrapper}
-                    behavior="padding"
-                    enabled
+                    behavior="padding" enabled
                 >
                     <ScrollView
-                        contentContainerStyle={{
-                            flexGrow: 1,
-                            justifyContent: "center"
-                        }}
+                        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
                         keyboardDismissMode="interactive"
                     >
-                        <SafeAreaView style={style.header}>
-                            <Image
-                                source={images.mainIcon}
-                                style={style.logo}
-                            />
+                        <SafeAreaView
+                            style={style.header}
+                        >
+                            <Image source={images.mainIcon} style={style.logo} />
                             <Text style={style.appName}>MyColloC</Text>
-                            <Text style={style.slogan}>
-                                Let's part expenses
-                            </Text>
+                            <Text style={style.slogan}> Let's part expenses </Text>
                         </SafeAreaView>
 
                         <SafeAreaView>
@@ -84,19 +77,11 @@ class LoginScreen extends React.Component {
                                     placeholder={this.state.emailPlaceholder}
                                     text={this.state.user.email}
                                     onChangeText={email =>
-                                        this.setState({
-                                            user: {
-                                                ...this.state.user,
-                                                email: email
-                                            }
-                                        })
-                                    }
+                                        this.setState({ user: { ...this.state.user, email: email } })}
                                     onFocus={() =>
-                                        this.setState({
-                                            emailPlaceholder: ""
-                                        })
+                                        this.setState({ emailPlaceholder: "" })
                                     }
-                                ></TextInput>
+                                />
                             </View>
                             <View style={[style.formView, style.passwordView]}>
                                 <TextInput
@@ -105,28 +90,15 @@ class LoginScreen extends React.Component {
                                     autoCorrect={false}
                                     placeholder={this.state.passwordPlaceholder}
                                     text={this.state.user.password}
-                                    onChangeText={password =>
-                                        this.setState({
-                                            user: {
-                                                ...this.state.user,
-                                                password: password
-                                            }
-                                        })
-                                    }
-                                    onFocus={() =>
-                                        this.setState({
-                                            passwordPlaceholder: ""
-                                        })
-                                    }
-                                ></TextInput>
+                                    onChangeText={password => this.setState({ user: { ...this.state.user, password: password } })}
+                                    onFocus={() => this.setState({ passwordPlaceholder: "" })}
+                                />
                             </View>
                         </SafeAreaView>
                         <Button
                             title="Login"
                             onPress={() =>
-                                this.props.navigation.navigate("Home", {
-                                    Id: 5
-                                })
+                                this.props.navigation.navigate("Home", { Id: 5 })
                             } //this.callLogin("a", "b")}
                         />
                     </ScrollView>
