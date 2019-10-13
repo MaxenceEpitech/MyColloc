@@ -68,8 +68,9 @@ class LoginScreen extends React.Component {
                             <Text style={style.slogan}> Let's part expenses </Text>
                         </SafeAreaView>
 
-                        <SafeAreaView>
+                        <SafeAreaView style={style.formContainer}>
                             <View style={[style.formView, style.emailView]}>
+                                <Image style={style.profileIcon} source={images.profileIcon} />
                                 <TextInput
                                     placeholderTextColor="rgba(255, 255, 255, 0.5)"
                                     style={style.defaultInput}
@@ -84,6 +85,7 @@ class LoginScreen extends React.Component {
                                 />
                             </View>
                             <View style={[style.formView, style.passwordView]}>
+                                <Image style={style.passwordIcon} source={images.passwordIcon} />
                                 <TextInput
                                     placeholderTextColor="rgba(255, 255, 255, 0.5)"
                                     style={style.defaultInput}
@@ -96,6 +98,7 @@ class LoginScreen extends React.Component {
                             </View>
                         </SafeAreaView>
                         <Button
+
                             title="Login"
                             onPress={() =>
                                 this.props.navigation.navigate("Home", { Id: 5 })
@@ -115,6 +118,11 @@ const style = StyleSheet.create({
     },
     header: {
         marginBottom: "15%"
+    },
+    wrapper: {
+        flex: 1,
+        justifyContent: "center",
+        alignContent: "center"
     },
     logo: {
         marginBottom: "5%",
@@ -138,38 +146,51 @@ const style = StyleSheet.create({
         textAlign: "center",
         fontFamily: "ProximaNova-Bold"
     },
-    wrapper: {
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "center",
-        alignContent: "center"
+    formContainer: {
+        flexDirection: 'column',
+        marginBottom: "10%",
+        marginLeft: "8%",
+        marginRight: "8%",
     },
-    defaultText: {
-        fontSize: 20,
-        fontFamily: "Elianto",
-        color: "white"
-    },
-    defaultInput: {
-        fontFamily: "ProximaNova-Regular",
-        textAlign: "center",
-        minHeight: 45,
-        fontSize: 20,
+    formView: {
+        flexDirection: 'row',
+        maxHeight: 50,
         backgroundColor: "rgba(255, 255, 255, 0.1)",
         borderRadius: 30,
-        color: "white",
         borderWidth: 1,
-        borderColor: "rgba(255, 255, 255, 0.1)"
+        borderColor: "rgba(255, 255, 255, 0.1)",
+        alignContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginBottom: "5%",
+    },
+    defaultInput: {
+        flex: 1,
+        height: 50,
+        fontFamily: "ProximaNova-Regular",
+        textAlign: "center",
+        fontSize: 20,
+        color: "white",
+        marginRight: "5%",
     },
     filledInput: {
         fontFamily: "ProximaNova-Regular"
     },
+    profileIcon: {
+        alignSelf: 'center',
+        marginLeft: '4%',
+        height: 30,
+        width: 30,
+    },
+    passwordIcon: {
+        alignSelf: 'center',
+        marginLeft: '4%',
+        height: 30,
+        width: 30,
+    },
     emailView: {},
     passwordView: {},
-    formView: {
-        marginBottom: "6%",
-        marginLeft: "8%",
-        marginRight: "8%"
-    }
+
 });
 
 export default LoginScreen;

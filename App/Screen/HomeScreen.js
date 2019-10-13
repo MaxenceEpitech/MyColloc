@@ -5,15 +5,17 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as shape from "d3-shape";
 
 import {
-    SafeAreaView,
+    AlertIOS,
     StyleSheet,
-    ScrollView,
-    View,
     Text,
-    StatusBar
-} from "react-native";
+    TouchableHighlight,
+    View,
+} from 'react-native';
 
 import { darkThemeColors } from "./Styles/ScreenStyles";
+
+
+import Biometrics from 'react-native-biometrics'
 
 class HomeScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
@@ -27,48 +29,71 @@ class HomeScreen extends React.Component {
         }
     });
 
-    constructor({ navigation }) {
-        super();
-        this.state = {
-            id: JSON.stringify(navigation.getParam("Id", "undefined")),
-            count: 0,
-            colorTop: "#000000",
-            colorBottom: "#cccccc"
-        };
+    clickHandler = async () => {
+
+    }
+    componentDidMount() {
+        Biometrics.isSensorAvailable()
+            .then((biometryType) => {
+                if (biometryType === Biometrics.TouchID) {
+                    console.log('TouchID is supported')
+                } else if (biometryType === Biometrics.FaceID) {
+                    console.log('FaceID is supported')
+                } else {
+                    console.log('Biometrics not supported')
+                }
+            })
     }
 
-    incrementColor = (color, step) => {
-        const intColor = parseInt(color.substr(1), 16);
-        const newIntColor = (intColor + step).toString(16);
-        return `#${"0".repeat(6 - newIntColor.length)}${newIntColor}`;
-    };
+    constructor() {
+        super()
 
-    componentDidMount() {
-        /*
-        setInterval(() => {
-            this.setState({
-                count: this.state.count + 1,
-                colorTop: this.incrementColor(this.state.colorTop, 1),
-                colorBottom: this.incrementColor(this.state.colorBottom, -1)
-            });
-        }, 20);*/
+        this.state = {
+            touchIdType: false,
+            faceIdType: false,
+            biometryType: null,
+        };
     }
 
     render() {
         return (
-            <View>
-                <LinearGradient
-                    colors={[darkThemeColors.gradientDark.dark, darkThemeColors.gradientDark.light]}
-                    style={styles.gradient}
-                />
+            <View style={styles.container}>
+                <TouchableHighlight
+                    style={styles.btn}
+                    onPress={this.clickHandler}
+                    underlayColor="#0380BE"
+                    activeOpacity={1}
+                >
+                    <Text style={{
+                        color: '#fff',
+                        fontWeight: '600'
+                    }}>
+                        {"Authenticate with"}
+                    </Text>
+                </TouchableHighlight>
             </View>
         );
     }
+
+
 }
+
 const styles = StyleSheet.create({
-    gradient: {
-        width: "100%",
-        height: "100%"
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF'
     },
+    btn: {
+        borderRadius: 3,
+        marginTop: 200,
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 15,
+        paddingRight: 15,
+        backgroundColor: '#0391D7'
+    }
 });
+
 export default HomeScreen;
