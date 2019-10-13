@@ -2073,6 +2073,13 @@ expo-linear-gradient@~6.0.0:
   resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-6.0.0.tgz#5fb0fb955dd22ef4ab032e543cb1c249885bf0b5"
   integrity sha512-TGHSK7MsoU1wZXx9uEivMggAR/KT4wTSE0xBfhB8qsziGXoHZdoT79/tZ3HyWtCG7+JVUEFXfUOBxtOlZOu5tg==
 
+expo-local-authentication@~6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/expo-local-authentication/-/expo-local-authentication-6.0.0.tgz#57a0e1e7d84c211cd88ca66227c4317b9b371b68"
+  integrity sha512-ecvHGJyMnpCWBG4z4G//3vo2LemVx6d8+8X09YLcrfBywxNYTOyHQjFV5Y39w5hcI4S6R5XmibO3fV/hjH+Bxg==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-location@~6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-6.0.0.tgz#da4e22ee5aa951d2c65d94f9916323eb4b3f8a01"
@@ -4253,6 +4260,11 @@ react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.6:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
+
+react-native-biometrics@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-biometrics/-/react-native-biometrics-1.6.1.tgz#c5f0c8949c6e527e6776c4581c4e5eebb6d571a7"
+  integrity sha512-WYdZ6k3Miyl/+lEdhq6y4B6wz16d+PomO/xjR1hScYKeQWj1jaugPy0Ep+EjoWpJkPYLvnxasmIYR9v8OvWNHg==
 
 react-native-branch@~3.0.1:
   version "3.0.1"
