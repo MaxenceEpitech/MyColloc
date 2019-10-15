@@ -26,5 +26,8 @@
         "infoPlist": {
             "NSFaceIDUsageDescription": "This app will optionally use Face ID or Touch ID to save login"
         }
+    },
+    "android": {
+        "package": "com.myColloc"
     }
 }

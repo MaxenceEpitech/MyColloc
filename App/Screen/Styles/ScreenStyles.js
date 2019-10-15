@@ -13,8 +13,8 @@ export const screenStyles = StyleSheet.create({
 
 export const darkThemeColors = {
     gradientDark: {
-        dark: "#CD5C5C",
-        light: "#FFA07A",
+        dark: "#239B56",
+        light: "#85C1E9",
         getTab: function () {
             return ([this.light, this.dark]);
         }

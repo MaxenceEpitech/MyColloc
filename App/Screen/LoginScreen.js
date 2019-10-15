@@ -2,7 +2,7 @@ import React from "react";
 import {
     Text,
     View,
-    Button,
+    TouchableOpacity,
     Image,
     ImageBackground,
     StyleSheet,
@@ -69,7 +69,7 @@ class LoginScreen extends React.Component {
                         </SafeAreaView>
 
                         <SafeAreaView style={style.formContainer}>
-                            <View style={[style.formView, style.emailView]}>
+                            <SafeAreaView style={style.formView}>
                                 <Image style={style.profileIcon} source={images.profileIcon} />
                                 <TextInput
                                     placeholderTextColor="rgba(255, 255, 255, 0.5)"
@@ -83,8 +83,8 @@ class LoginScreen extends React.Component {
                                         this.setState({ emailPlaceholder: "" })
                                     }
                                 />
-                            </View>
-                            <View style={[style.formView, style.passwordView]}>
+                            </SafeAreaView>
+                            <SafeAreaView style={style.formView}>
                                 <Image style={style.passwordIcon} source={images.passwordIcon} />
                                 <TextInput
                                     placeholderTextColor="rgba(255, 255, 255, 0.5)"
@@ -95,15 +95,27 @@ class LoginScreen extends React.Component {
                                     onChangeText={password => this.setState({ user: { ...this.state.user, password: password } })}
                                     onFocus={() => this.setState({ passwordPlaceholder: "" })}
                                 />
-                            </View>
+                            </SafeAreaView>
+                            <TouchableOpacity
+                                style={style.loginButton}
+                                onPress={() => this.callLogin()}
+                            >
+                                <Text style={style.loginButtonText}>LOGIN</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={style.registerButton}
+                                onPress={() => this.props.navigation.navigate("Register", { user: this.state.user })}
+                            >
+                                <Text style={style.buttonText}>Don't have an account? </Text>
+                                <Text style={[style.buttonText, { fontFamily: "ProximaNova-Bold" }]}> Sign Up Now</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={style.forgotPasswordButton}
+                                onPress={() => this.props.navigation.navigate("ResetPassword", { user: this.state.user })}
+                            >
+                                <Text style={[style.buttonText, { fontFamily: "ProximaNova-Bold" }]}>Forgot Password?</Text>
+                            </TouchableOpacity>
                         </SafeAreaView>
-                        <Button
-
-                            title="Login"
-                            onPress={() =>
-                                this.props.navigation.navigate("Home", { Id: 5 })
-                            } //this.callLogin("a", "b")}
-                        />
                     </ScrollView>
                 </KeyboardAvoidingView>
             </LinearGradient>
@@ -125,12 +137,13 @@ const style = StyleSheet.create({
         alignContent: "center"
     },
     logo: {
+        flex: 1,
         marginBottom: "5%",
         borderRadius: 60,
-        resizeMode: "contain",
+        resizeMode: "cover",
         width: 230,
         height: 230,
-        backgroundColor: "rgba(255, 255, 255, 0.05)",
+        backgroundColor: "rgba(255, 255, 255, 0.3)",
         alignContent: "center",
         alignSelf: "center"
     },
@@ -171,7 +184,7 @@ const style = StyleSheet.create({
         textAlign: "center",
         fontSize: 20,
         color: "white",
-        marginRight: "5%",
+        paddingRight: "12%",
     },
     filledInput: {
         fontFamily: "ProximaNova-Regular"
@@ -188,9 +201,38 @@ const style = StyleSheet.create({
         height: 30,
         width: 30,
     },
-    emailView: {},
-    passwordView: {},
-
+    loginButton: {
+        marginTop: "2%",
+        height: 50,
+        justifyContent: 'center',
+        backgroundColor: "rgba(255, 255, 255, 1)",
+        borderRadius: 30,
+    },
+    loginButtonText: {
+        color: darkThemeColors.gradientDark.dark,
+        fontFamily: "ProximaNova-Alt-Bold",
+        textAlign: "center",
+        fontSize: 20,
+        textAlignVertical: "center",
+    },
+    registerButton: {
+        paddingTop: "8%",
+        height: 50,
+        justifyContent: 'center',
+        flexDirection: "row"
+    },
+    buttonText: {
+        color: "white",
+        fontFamily: "ProximaNova-Alt-Light",
+        textAlign: "center",
+        fontSize: 15,
+        textAlignVertical: "center",
+    },
+    forgotPasswordButton: {
+        paddingTop: "11%",
+        height: 50,
+        justifyContent: 'center',
+    },
 });
 
 export default LoginScreen;
