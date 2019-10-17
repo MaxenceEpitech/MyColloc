@@ -24,7 +24,8 @@
     "ios": {
         "bundleIdentifier": "com.myColloc",
         "infoPlist": {
-            "NSFaceIDUsageDescription": "This app will optionally use Face ID or Touch ID to save login"
+            "NSFaceIDUsageDescription": "This app will optionally use Face ID or Touch ID to save login",
+            "NFCReaderUsageDescription": "Check card"
         }
     },
     "android": {

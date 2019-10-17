@@ -4261,11 +4261,6 @@ react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-react-native-biometrics@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-biometrics/-/react-native-biometrics-1.6.1.tgz#c5f0c8949c6e527e6776c4581c4e5eebb6d571a7"
-  integrity sha512-WYdZ6k3Miyl/+lEdhq6y4B6wz16d+PomO/xjR1hScYKeQWj1jaugPy0Ep+EjoWpJkPYLvnxasmIYR9v8OvWNHg==
-
 react-native-branch@~3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-3.0.1.tgz#5b07b61cbd290168cd3c3662e017ebe0f356d2ca"
@@ -4288,6 +4283,11 @@ react-native-gesture-handler@~1.3.0:
     hoist-non-react-statics "^2.3.1"
     invariant "^2.2.2"
     prop-types "^15.5.10"
+
+react-native-rfid-nfc-scanner@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-rfid-nfc-scanner/-/react-native-rfid-nfc-scanner-1.0.0.tgz#b6b853f43948d4c298d0b6dd4f7eca81adc192a3"
+  integrity sha512-+vhZqmzZlzgQo/wh/I+aBmouZPySRNRQGtJLslUgktw6b6ICbnMCwQ0wrU/ZDirwLPBAtlzCftad94BuKWcaCQ==
 
 react-native-safe-area-view@^0.14.1:
   version "0.14.8"

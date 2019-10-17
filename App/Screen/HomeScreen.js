@@ -15,7 +15,6 @@ import {
 import { darkThemeColors } from "./Styles/ScreenStyles";
 
 import * as LocalAuthentication from 'expo-local-authentication';
-import Biometrics from 'react-native-biometrics'
 
 class HomeScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
@@ -40,17 +39,6 @@ class HomeScreen extends React.Component {
         let ret3 = await LocalAuthentication.authenticateAsync({ fallbackLabel: "YYYY", promptMessage: "UUUUU" });
         console.log(ret3);
 
-        /*
-        Biometrics.isSensorAvailable()
-            .then((biometryType) => {
-                if (biometryType === Biometrics.TouchID) {
-                    console.log('TouchID is supported')
-                } else if (biometryType === Biometrics.FaceID) {
-                    console.log('FaceID is supported')
-                } else {
-                    console.log('Biometrics not supported')
-                }
-            })*/
     }
 
     constructor() {
