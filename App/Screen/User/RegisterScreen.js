@@ -1,44 +1,48 @@
 import React from "react";
 import {
-    Text,
     View,
-    TouchableOpacity,
-    Image,
-    ImageBackground,
     StyleSheet,
-    TextInput,
-    ScrollView,
-    KeyboardAvoidingView
 } from "react-native";
 
-//const scanner = new NfcRfidScanner();
+import { register } from "../../API/Connexion";
+import { setUser } from "./User"
+
+import { Background } from "./Background";
+import { Header } from "./Header";
+import { RegisterForm } from "./RegisterForm";
 
 class RegisterScreen extends React.Component {
     static navigationOptions = {
-        //header: null
+        header: null,
     };
 
     constructor({ navigation }) {
         super();
         this.state = {
-            isLogin: false,
-            user: {
-                email: "",
-                password: ""
-            },
-            emailPlaceholder: "Email",
-            passwordPlaceholder: "Password"
+            isRegister: false,
         };
-
-        //scanner.addListener("salut", this.callback, this.error)
-
+        this.callRegister = this.callRegister.bind(this);
     }
 
+    callRegister = async (user) => {
+        setUser(user);
+        this.setState({ isRegister: true });
+        const response = await register(user);
+        this.setState({ isRegister: false });
+        console.log(response);
+    };
+
     render() {
-        const { navigation } = this.props;
         return (
-            <View></View>
-        )
+            <View>
+                <Background content={
+                    <View>
+                        <Header />
+                        <RegisterForm callRegister={this.callRegister} navigation={this.props.navigation} />
+                    </View>
+                } screen='register' />
+            </View>
+        );
     }
 }
 

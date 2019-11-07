@@ -25,7 +25,8 @@
         "bundleIdentifier": "com.myColloc",
         "infoPlist": {
             "NSFaceIDUsageDescription": "This app will optionally use Face ID or Touch ID to save login",
-            "NFCReaderUsageDescription": "Check card"
+            "NFCReaderUsageDescription": "Check card",
+            "Permissions.CAMERA": "Use the camera to take picture of receipt"
         }
     },
     "android": {

@@ -11,17 +11,19 @@ import {
 import { darkThemeColors } from "../Styles/ScreenStyles";
 import images from "../../../assets/Images";
 
-export class LoginForm extends Component {
-    constructor() {
+export class RegisterForm extends Component {
+    constructor({ navigation }) {
         super();
         this.state = {
             isLogin: false,
             user: {
                 email: "",
-                password: ""
+                password: "",
+                passwordConfirm: ""
             },
             emailPlaceholder: "Email",
-            passwordPlaceholder: "Password"
+            passwordPlaceholder: "Password",
+            confirmPasswordPlaceholder: "Confirm Password"
         };
     }
 
@@ -31,7 +33,6 @@ export class LoginForm extends Component {
                 <SafeAreaView style={style.formView}>
                     <Image style={style.profileIcon} source={images.profileIcon} />
                     <TextInput
-                        keyboardType="email-address"
                         placeholderTextColor="rgba(255, 255, 255, 0.5)"
                         style={style.defaultInput}
                         autoCorrect={false}
@@ -53,24 +54,30 @@ export class LoginForm extends Component {
                         onFocus={() => this.setState({ passwordPlaceholder: "" })}
                     />
                 </SafeAreaView>
+                <SafeAreaView style={style.formView}>
+                    <Image style={style.passwordIcon} source={images.passwordIcon} />
+                    <TextInput
+                        placeholderTextColor="rgba(255, 255, 255, 0.5)"
+                        style={style.defaultInput}
+                        autoCorrect={false}
+                        placeholder={this.state.confirmPasswordPlaceholder}
+                        text={this.state.user.passwordConfirm}
+                        onChangeText={passwordConfirm => this.setState({ user: { ...this.state.user, passwordConfirm: passwordConfirm } })}
+                        onFocus={() => this.setState({ confirmPasswordPlaceholder: "" })}
+                    />
+                </SafeAreaView>
                 <TouchableOpacity
                     style={style.loginButton}
-                    onPress={() => this.props.callLogin(this.state.user)}
+                    onPress={() => this.props.callRegister(this.state.user)}
                 >
-                    <Text style={style.loginButtonText}>LOGIN</Text>
+                    <Text style={style.loginButtonText}>REGISTER</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={style.registerButton}
-                    onPress={() => this.props.navigation.navigate("Register")}
+                    onPress={() => this.props.navigation.navigate("Login")}
                 >
-                    <Text style={style.buttonText}>Don't have an account? </Text>
-                    <Text style={[style.buttonText, { fontFamily: "ProximaNovaBold" }]}> Sign Up Now</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={style.forgotPasswordButton}
-                    onPress={() => this.props.navigation.navigate("ResetPassword", { user: this.state.user })}
-                >
-                    <Text style={[style.buttonText, { fontFamily: "ProximaNovaBold" }]}>Forgot Password?</Text>
+                    <Text style={style.buttonText}>Already have an account? </Text>
+                    <Text style={[style.buttonText, { fontFamily: "ProximaNovaBold" }]}> Login Now</Text>
                 </TouchableOpacity>
             </SafeAreaView>
         )

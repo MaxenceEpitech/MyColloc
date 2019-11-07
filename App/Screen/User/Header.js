@@ -4,18 +4,52 @@ import {
     Text,
     Image,
     SafeAreaView,
-    StyleSheet
+    StyleSheet,
+    Animated,
 } from "react-native";
 import { darkThemeColors } from "../Styles/ScreenStyles";
 import images from "../../../assets/Images";
 
 export class Header extends Component {
+    constructor() {
+        super();
+        this.state = {
+            logoSlide: new Animated.Value(0),
+        }
+    }
+
+    Animation = () => {
+        return (
+            Animated.timing(this.state.logoSlide, {
+                toValue: 1,
+                duration: 500,
+                useNativeDriver: true
+            })
+        ).start();
+    }
+
+    componentDidMount() {
+        this.Animation();
+    }
+
     render() {
+        let { logoSlide } = this.state;
         return (
             <SafeAreaView
                 style={style.header}
             >
-                <Image source={images.mainIcon} style={style.logo} />
+                <Animated.Image source={images.mainIcon}
+                    style={[style.logo, {
+                        transform: [
+                            {
+                                translateX: logoSlide.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [-600, 0]
+                                })
+                            }
+                        ],
+                    }
+                    ]} />
                 <Text style={style.appName}>MyColloC</Text>
                 <Text style={style.slogan}>Let's part expenses</Text>
             </SafeAreaView>
@@ -25,7 +59,8 @@ export class Header extends Component {
 
 const style = StyleSheet.create({
     header: {
-        marginBottom: "15%"
+        marginBottom: "15%",
+        marginTop: "5%"
     },
     logo: {
         flex: 1,
@@ -39,15 +74,15 @@ const style = StyleSheet.create({
         alignSelf: "center"
     },
     appName: {
-        color: darkThemeColors.gradientDark.light,
+        color: darkThemeColors.gradientMain[0],
         textAlign: "center",
         fontFamily: "Elianto",
         fontSize: 40,
         marginBottom: "2%"
     },
     slogan: {
-        color: darkThemeColors.gradientDark.dark,
+        color: darkThemeColors.gradientMain[0],
         textAlign: "center",
-        fontFamily: "ProximaNova-Bold"
+        fontFamily: "ProximaNovaBold"
     },
 })

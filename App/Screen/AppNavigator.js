@@ -5,12 +5,29 @@ import ProfileScreen from "./ProfileScreen";
 import LoginScreen from "./User/LoginScreen";
 import RegisterScreen from "./User/RegisterScreen"
 
+import {
+  Text,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Animated,
+  Easing
+} from "react-native";
+
 const AppNavigator = createStackNavigator(
   {
-    Home: HomeScreen,
-    Profile: ProfileScreen,
-    Login: LoginScreen,
-    Register: RegisterScreen,
+    Home: {
+      screen: HomeScreen,
+    },
+    Profile: {
+      screen: ProfileScreen,
+    },
+    Login: {
+      screen: LoginScreen,
+    },
+    Register: {
+      screen: RegisterScreen,
+    },
   },
   {
     initialRouteName: "Login",

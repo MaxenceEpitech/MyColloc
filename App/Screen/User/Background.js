@@ -11,6 +11,14 @@ import { darkThemeColors } from "../Styles/ScreenStyles";
 import images from "../../../assets/Images";
 
 export class Background extends Component {
+
+    getBackgroundStyle() {
+        if (this.props.screen == 'login') {
+            return { transform: [{ rotate: '180deg' }] }
+        }
+        return {}
+    }
+
     render() {
         return (
             <LinearGradient
@@ -19,8 +27,8 @@ export class Background extends Component {
             >
                 <ImageBackground
                     resizeMode="cover"
-                    source={images.background}
-                    style={{ width: '100%', height: '60%' }}
+                    source={images.background1}
+                    style={[style.background, this.getBackgroundStyle()]}
                 />
                 <KeyboardAvoidingView
                     style={style.wrapper}

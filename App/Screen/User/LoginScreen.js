@@ -13,11 +13,11 @@ import { LoginForm } from "./LoginForm";
 
 class LoginScreen extends React.Component {
     static navigationOptions = {
-        header: null
+        header: null,
     };
 
-    constructor({ navigation }) {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             isLogin: false,
         };
@@ -40,13 +40,10 @@ class LoginScreen extends React.Component {
                         <Header />
                         <LoginForm callLogin={this.callLogin} navigation={this.props.navigation} />
                     </View>
-                } />
+                } screen='login' />
             </View>
         );
     }
 }
-
-const style = StyleSheet.create({
-});
 
 export default LoginScreen;

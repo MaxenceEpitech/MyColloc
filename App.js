@@ -1,21 +1,38 @@
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 
 import { createAppContainer } from "react-navigation";
 import AppNavigator from "./App/Screen/AppNavigator";
+import { AppLoading } from 'expo';
+
+import { Asset } from 'expo-asset';
+import { allImages } from './assets/Images';
 import * as Font from "expo-font";
 
 const AppContainer = createAppContainer(AppNavigator);
+
+function cacheImages(images) {
+    return images.map(image => {
+        if (typeof image === 'string') {
+            return Image.prefetch(image);
+        } else {
+            return Asset.fromModule(image).downloadAsync();
+        }
+    });
+}
+
+function cacheFonts(fonts) {
+    return fonts.map(font => Font.loadAsync(font));
+}
 
 export default class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            fontLoaded: false
+            isReady: false,
         };
     }
 
-    async componentDidMount() {
+    async _loadAssetsAsync() {
         await Font.loadAsync({
             Elianto: require("./assets/fonts/Elianto-Regular.ttf"),
             Digital: require("./assets/fonts/Digital.ttf"),
@@ -23,32 +40,33 @@ export default class App extends React.Component {
             Beams: require("./assets/fonts/Beams.ttf"),
             Anurati: require("./assets/fonts/Anurati-Regular.otf"),
             Mylodon: require("./assets/fonts/Mylodon-Light.otf"),
-            "ProximaNova-Alt-Bold": require("./assets/fonts/ProximaNova-Alt-Bold.otf"),
-            "ProximaNova-Alt-Light": require("./assets/fonts/ProximaNova-Alt-Light.otf"),
-            "ProximaNova-Alt-Thin": require("./assets/fonts/ProximaNova-Alt-Thin.otf"),
-            "ProximaNova-Black": require("./assets/fonts/ProximaNova-Black.otf"),
-            "ProximaNova-Bold": require("./assets/fonts/ProximaNova-Bold.otf"),
-            "ProximaNova-Extrabold": require("./assets/fonts/ProximaNova-Extrabold.otf"),
-            "ProximaNova-Regular": require("./assets/fonts/ProximaNova-Regular.otf"),
-            "ProximaNova-Thin": require("./assets/fonts/ProximaNova-Thin.otf")
+            ProximaNovaAltBold: require("./assets/fonts/ProximaNova-Alt-Bold.otf"),
+            ProximaNovaAltLight: require("./assets/fonts/ProximaNova-Alt-Light.otf"),
+            ProximaNovaAltThin: require("./assets/fonts/ProximaNova-Alt-Thin.otf"),
+            ProximaNovaBlack: require("./assets/fonts/ProximaNova-Black.otf"),
+            ProximaNovaBold: require("./assets/fonts/ProximaNova-Bold.otf"),
+            ProximaNovaExtrabold: require("./assets/fonts/ProximaNova-Extrabold.otf"),
+            ProximaNovaRegular: require("./assets/fonts/ProximaNova-Regular.otf"),
+            ProximaNovaThin: require("./assets/fonts/ProximaNova-Thin.otf"),
         });
-        this.setState({ fontLoaded: true });
+        const imageAssets = cacheImages(allImages());
+
+        await Promise.all([...imageAssets]);
     }
+
 
     render() {
-        return this.state.fontLoaded ? <AppContainer /> : null;
+        if (!this.state.isReady) {
+            return (
+                <AppLoading
+                    startAsync={this._loadAssetsAsync}
+                    onFinish={() => this.setState({ isReady: true })}
+                    onError={console.warn}
+                />
+            );
+        }
+        return (
+            <AppContainer />
+        );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    safeArea: {
-        flex: 1,
-        backgroundColor: "#ddd"
-    }
-});
