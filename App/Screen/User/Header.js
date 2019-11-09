@@ -59,18 +59,15 @@ export class Header extends Component {
 
 const style = StyleSheet.create({
     header: {
-        marginBottom: "15%",
-        marginTop: "5%"
+        marginTop: "5%",
     },
     logo: {
-        flex: 1,
         marginBottom: "5%",
         borderRadius: 60,
-        resizeMode: "cover",
         width: 230,
         height: 230,
         backgroundColor: "rgba(255, 255, 255, 0.3)",
-        alignContent: "center",
+
         alignSelf: "center"
     },
     appName: {

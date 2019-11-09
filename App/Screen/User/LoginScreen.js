@@ -5,11 +5,13 @@ import {
 } from "react-native";
 
 import { login } from "../../API/Connexion";
-import { setUser } from "./User"
+import { asyncStorageSetUser } from "../Utils/AsyncStorage";
+import { setUser, getUser } from "./User";
 
 import { Background } from "./Background";
 import { Header } from "./Header";
 import { LoginForm } from "./LoginForm";
+import { AutoConnectForm } from "./AutoConnectForm"
 
 class LoginScreen extends React.Component {
     static navigationOptions = {
@@ -20,17 +22,40 @@ class LoginScreen extends React.Component {
         super(props);
         this.state = {
             isLogin: false,
+            canAutoConnect: false,
         };
+        this.state.canAutoConnect = this.canAutoConnect();
+
         this.callLogin = this.callLogin.bind(this);
+        this.callLoginBiometric = this.callLoginBiometric.bind(this);
+        this.updateAutoConnect = this.updateAutoConnect.bind(this);
     }
 
     callLogin = async (user) => {
+        console.log("Call Login");
         setUser(user);
         this.setState({ isLogin: true });
-        const response = await login(user);
+        //const response = await login(user);
+        //if (typeof (response) !== 'undefined') {
+        asyncStorageSetUser(user);
+        //}
         this.setState({ isLogin: false });
-        console.log(response);
     };
+
+    callLoginBiometric = async () => {
+
+    }
+
+    updateAutoConnect = () => {
+        this.setState({ canAutoConnect: false });
+    }
+    canAutoConnect = () => {
+        const currentUser = getUser();
+        if (currentUser != null && currentUser.email != null && currentUser.email != '') {
+            return true;
+        }
+        return false;
+    }
 
     render() {
         return (
@@ -38,7 +63,9 @@ class LoginScreen extends React.Component {
                 <Background content={
                     <View>
                         <Header />
-                        <LoginForm callLogin={this.callLogin} navigation={this.props.navigation} />
+                        {this.state.canAutoConnect
+                            ? <AutoConnectForm canAutoConnect={this.updateAutoConnect} callLoginBiometric={this.callLoginBiometric} navigation={this.props.navigation} />
+                            : <LoginForm callLogin={this.callLogin} navigation={this.props.navigation} />}
                     </View>
                 } screen='login' />
             </View>

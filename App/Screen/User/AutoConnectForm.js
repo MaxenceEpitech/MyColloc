@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useRef } from 'react'
 
 import {
     Text,
@@ -6,13 +6,19 @@ import {
     Image,
     StyleSheet,
     TextInput,
-    SafeAreaView
+    SafeAreaView,
+    Keyboard
 } from "react-native";
 import { darkThemeColors } from "../Styles/ScreenStyles";
 import images from "../../../assets/Images";
+import { getUser, setUser } from "./User"
 
-export class LoginForm extends Component {
-    constructor() {
+const defaultLoginText = "Login";
+const faceIdLoginText = "Login with FaceId";
+const touchIdLoginText = "Login with TouchId";
+
+export class AutoConnectForm extends Component {
+    constructor(props) {
         super();
         this.state = {
             isLogin: false,
@@ -20,57 +26,66 @@ export class LoginForm extends Component {
                 email: "",
                 password: ""
             },
-            emailPlaceholder: "Email",
-            passwordPlaceholder: "Password"
+            passwordPlaceholder: "Password",
+            loginButtonText: "Login"
         };
+        this.state.user.email = getUser().email;
+    }
+
+    async componentDidMount() {
+        this.updateLoginButton();
+    }
+
+    logOut() {
+        this.setState({ user: { email: "", password: "" } });
+        setUser(this.state.user);
+        this.props.canAutoConnect();
+    }
+
+    updateLoginButton() {
+        if (this.state.user == undefined || this.state.user.password == undefined || this.state.user.password == '') {
+            this.setState({ loginButtonText: faceIdLoginText });
+        } else {
+            this.setState({ loginButtonText: defaultLoginText });
+        }
     }
 
     render() {
         return (
             <SafeAreaView style={style.formContainer}>
-                <SafeAreaView style={style.formView}>
-                    <Image style={style.profileIcon} source={images.profileIcon} />
-                    <TextInput
-                        ref={(input) => { this.secondTextInput = input; }}
-                        onSubmitEditing={() => this.secondTextInput.focus()}
-                        returnKeyType={"next"}
-                        keyboardType="email-address"
-                        placeholderTextColor="rgba(255, 255, 255, 0.5)"
-                        style={style.defaultInput}
-                        autoCorrect={false}
-                        placeholder={this.state.emailPlaceholder}
-                        text={this.state.user.email}
-                        onChangeText={email => this.setState({ user: { ...this.state.user, email: email } })}
-                        onFocus={() => this.setState({ emailPlaceholder: "" })}
-                    />
-                </SafeAreaView>
+                <Text style={style.welcomeUser}>Hello, {this.state.user.email}</Text>
                 <SafeAreaView style={style.formView}>
                     <Image style={style.passwordIcon} source={images.passwordIcon} />
                     <TextInput
-                        ref={(input) => this.secondTextInput = input}
-                        onSubmitEditing={() => this.props.callLogin(this.state.user)}
-                        returnKeyType={"done"}
+                        ref="passwordInput"
                         placeholderTextColor="rgba(255, 255, 255, 0.5)"
                         style={style.defaultInput}
                         autoCorrect={false}
                         placeholder={this.state.passwordPlaceholder}
                         text={this.state.user.password}
                         onChangeText={password => this.setState({ user: { ...this.state.user, password: password } })}
-                        onFocus={() => this.setState({ passwordPlaceholder: "" })}
+                        onFocus={() => {
+                            this.setState({ passwordPlaceholder: "" });
+                            this.setState({ loginButtonText: defaultLoginText });
+                        }}
+                        onBlur={() => this.updateLoginButton()}
+                        ref={(input) => this.secondTextInput = input}
+                        onSubmitEditing={() => this.props.callLogin(this.state.user)}
+                        returnKeyType={"done"}
                     />
                 </SafeAreaView>
                 <TouchableOpacity
                     style={style.loginButton}
                     onPress={() => this.props.callLogin(this.state.user)}
                 >
-                    <Text style={style.loginButtonText}>LOGIN</Text>
+                    <Text style={style.loginButtonText}>{this.state.loginButtonText}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={style.registerButton}
-                    onPress={() => this.props.navigation.navigate("Register")}
+                    style={style.switchAccount}
+                    onPress={() => this.logOut()}
                 >
-                    <Text style={style.buttonText}>Don't have an account? </Text>
-                    <Text style={[style.buttonText, { fontFamily: "ProximaNovaBold" }]}> Sign Up Now</Text>
+                    <Text style={style.buttonText}>Not your account? </Text>
+                    <Text style={[style.buttonText, { fontFamily: "ProximaNovaBold" }]}> Switch Account </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={style.forgotPasswordButton}
@@ -89,7 +104,7 @@ const style = StyleSheet.create({
         marginBottom: "10%",
         marginLeft: "8%",
         marginRight: "8%",
-        marginTop: "15%",
+        marginTop: "10%",
     },
     formView: {
         flexDirection: 'row',
@@ -103,6 +118,13 @@ const style = StyleSheet.create({
         alignSelf: 'center',
         marginBottom: "5%",
     },
+    welcomeUser: {
+        color: "white",
+        textAlign: "center",
+        fontFamily: "ProximaNovaRegular",
+        fontSize: 40,
+        marginBottom: "2%"
+    },
     defaultInput: {
         flex: 1,
         height: 50,
@@ -111,15 +133,6 @@ const style = StyleSheet.create({
         fontSize: 20,
         color: "white",
         paddingRight: "12%",
-    },
-    filledInput: {
-        fontFamily: "ProximaNovaRegular"
-    },
-    profileIcon: {
-        alignSelf: 'center',
-        marginLeft: '4%',
-        height: 30,
-        width: 30,
     },
     passwordIcon: {
         alignSelf: 'center',
@@ -141,8 +154,8 @@ const style = StyleSheet.create({
         fontSize: 20,
         textAlignVertical: "center",
     },
-    registerButton: {
-        paddingTop: "8%",
+    switchAccount: {
+        paddingTop: "11%",
         height: 50,
         justifyContent: 'center',
         flexDirection: "row"
@@ -155,7 +168,7 @@ const style = StyleSheet.create({
         textAlignVertical: "center",
     },
     forgotPasswordButton: {
-        paddingTop: "11%",
+        paddingTop: "5%",
         height: 50,
         justifyContent: 'center',
     },
