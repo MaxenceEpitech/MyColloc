@@ -1,2 +1,3 @@
 MyColloc
-Mobile application to to manage expenses
+
+Mobile application to manage expenses
